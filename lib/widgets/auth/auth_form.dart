@@ -1,10 +1,11 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'dart:io';
 
 import '../pickers/user_image_picker.dart';
 
 class AuthForm extends StatefulWidget {
-  const AuthForm(this.submitFn, this.isLoading, {Key? key}) : super(key: key);
+  const AuthForm(this.submitFn, this.isLoading, {Key key}) : super(key: key);
 
   final bool isLoading;
   final void Function(
@@ -27,7 +28,7 @@ class _AuthFormState extends State<AuthForm> {
   String _userEmail = '';
   String _userName = '';
   String _userPassword = '';
-  File? _userImageFile;
+  File _userImageFile;
 
   void _pickedImage(File image) {
     _userImageFile = image;
@@ -48,14 +49,14 @@ class _AuthFormState extends State<AuthForm> {
       return;
     }
 
-    if (isVaild!) {
+    if (isVaild) {
       _formKey.currentState?.save(); //onSaved:
       widget.submitFn(
         //passing to auth_screen.dart
         _userEmail.trim(),
         _userName.trim(),
         _userPassword.trim(),
-        _userImageFile!,
+        _userImageFile,
         _isLogin,
         context,
       );
@@ -108,7 +109,7 @@ class _AuthFormState extends State<AuthForm> {
                         labelText: 'Username',
                       ),
                       onSaved: (val) {
-                        _userName = val!;
+                        _userName = val;
                       },
                     ),
                   TextFormField(

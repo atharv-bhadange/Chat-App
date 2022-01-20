@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 
 class MessageBubble extends StatelessWidget {
@@ -60,10 +61,8 @@ class MessageBubble extends StatelessWidget {
                   Text(
                     message,
                     style: TextStyle(
-                        color: Theme.of(context)
-                            .primaryTextTheme
-                            .bodyText1!
-                            .color),
+                        color:
+                            Theme.of(context).primaryTextTheme.bodyText1.color),
                     textAlign: isMe ? TextAlign.end : TextAlign.start,
                   ),
                 ],

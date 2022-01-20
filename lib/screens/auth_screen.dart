@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 import 'dart:io';
 
@@ -9,7 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+  const AuthScreen({Key key}) : super(key: key);
 
   @override
   _AuthScreenState createState() => _AuthScreenState();
@@ -45,7 +46,7 @@ class _AuthScreenState extends State<AuthScreen> {
         final ref = FirebaseStorage.instance
             .ref()
             .child('user_image')
-            .child(userCredential.user!.uid + '.jpg');
+            .child(userCredential.user.uid + '.jpg');
 
         await ref.putFile(image);
 
@@ -53,7 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
 
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(userCredential.user!.uid)
+            .doc(userCredential.user.uid)
             .set({
           'username': username,
           'email': email,
@@ -61,7 +62,7 @@ class _AuthScreenState extends State<AuthScreen> {
         });
       }
     } on PlatformException catch (err) {
-      String? message = 'An error occured plzz check your credianals';
+      String message = 'An error occured plzz check your credianals';
       if (err.message != null) {
         message = err.message.toString();
 

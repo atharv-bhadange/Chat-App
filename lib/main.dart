@@ -1,3 +1,4 @@
+// @dart=2.9
 import 'package:flutter/material.dart';
 
 import './screens/chat_screen.dart';
@@ -13,7 +14,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +38,9 @@ class MyApp extends StatelessWidget {
       home: StreamBuilder(
         builder: (ctx, AsyncSnapshot userSnapshot) {
           if (userSnapshot.hasData) {
-            return ChatScreen();
+            return const ChatScreen();
           } else {
-            return AuthScreen();
+            return const AuthScreen();
           }
         },
         stream: FirebaseAuth.instance.authStateChanges(),
