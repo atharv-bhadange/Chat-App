@@ -31,10 +31,10 @@ class ChatScreen extends StatelessWidget {
                       Icons.exit_to_app,
                       color: Theme.of(context).primaryColorDark,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
-                    Text(
+                    const Text(
                       'Logout',
                     ),
                   ],
@@ -52,7 +52,7 @@ class ChatScreen extends StatelessWidget {
         backgroundColor: Theme.of(context).primaryColor,
       ),
       body: Column(
-        children: [
+        children: const [
           Expanded(
             child: Messages(),
           ),
