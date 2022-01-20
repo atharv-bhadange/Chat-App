@@ -20,7 +20,7 @@ class _AuthScreenState extends State<AuthScreen> {
     String username,
     String password,
     bool isLogin,
-    //BuildContext ctx,
+    BuildContext ctx,
   ) async {
     UserCredential userCredential;
     try {

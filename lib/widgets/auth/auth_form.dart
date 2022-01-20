@@ -11,7 +11,7 @@ class AuthForm extends StatefulWidget {
     String username,
     String password,
     bool isLogin,
-    //BuildContext ctx,
+    BuildContext ctx,
   ) submitFn;
 
   @override
@@ -27,19 +27,19 @@ class _AuthFormState extends State<AuthForm> {
   String _userPassword = '';
 
   void _trySubmit() {
-    final isVaild = _formKey.currentState!.validate(); //validator:
+    final isVaild = _formKey.currentState?.validate(); //validator:
 
     FocusScope.of(context).unfocus(); //closes keyboard after submitting
 
-    if (isVaild) {
-      _formKey.currentState!.save(); //onSaved:
+    if (isVaild!) {
+      _formKey.currentState?.save(); //onSaved:
       widget.submitFn(
         //passing to auth_screen.dart
         _userEmail.trim(),
         _userName.trim(),
         _userPassword.trim(),
         _isLogin,
-        //context,
+        context,
       );
       //use those values for for FireBase Authentication
     }
@@ -52,106 +52,107 @@ class _AuthFormState extends State<AuthForm> {
         margin: const EdgeInsets.all(20),
         child: SingleChildScrollView(
           child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    TextFormField(
-                      key: const ValueKey('email'),
-                      validator: (value) {
-                        if ((value != null && value.isEmpty) ||
-                            (value != null && !value.contains('@'))) {
-                          return 'Please enter correct email address!';
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: const InputDecoration(
-                        labelText: 'Email address',
-                      ),
-                      onSaved: (val) {
-                        _userEmail = val.toString();
-                      },
+            padding: const EdgeInsets.all(16),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextFormField(
+                    key: const ValueKey('email'),
+                    validator: (value) {
+                      if ((value != null && value.isEmpty) ||
+                          (value != null && !value.contains('@'))) {
+                        return 'Please enter correct email address!';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.emailAddress,
+                    decoration: const InputDecoration(
+                      labelText: 'Email address',
                     ),
-                    if (!_isLogin)
-                      TextFormField(
-                        key: const ValueKey('username'),
-                        validator: (value) {
-                          if ((value != null && value.isEmpty) ||
-                              (value != null && value.length < 4)) {
-                            return 'Enter longer username';
-                          }
-                          return null;
-                        },
-                        decoration: const InputDecoration(
-                          labelText: 'Username',
-                        ),
-                        onSaved: (val) {
-                          _userName = val.toString();
-                        },
-                      ),
+                    onSaved: (val) {
+                      _userEmail = val.toString();
+                    },
+                  ),
+                  if (!_isLogin)
                     TextFormField(
-                      key: const ValueKey('password'),
+                      key: const ValueKey('username'),
                       validator: (value) {
                         if ((value != null && value.isEmpty) ||
-                            (value != null && value.length < 7)) {
-                          return 'Enter longer password';
+                            (value != null && value.length < 4)) {
+                          return 'Enter longer username';
                         }
                         return null;
                       },
                       decoration: const InputDecoration(
-                        labelText: 'Password',
+                        labelText: 'Username',
                       ),
-                      obscureText: true,
                       onSaved: (val) {
-                        _userPassword = val.toString();
+                        _userName = val!;
                       },
                     ),
-                    const SizedBox(
-                      height: 12,
+                  TextFormField(
+                    key: const ValueKey('password'),
+                    validator: (value) {
+                      if ((value != null && value.isEmpty) ||
+                          (value != null && value.length < 7)) {
+                        return 'Enter longer password';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
+                      labelText: 'Password',
                     ),
-                    if (widget.isLoading)
-                      const CircularProgressIndicator(
-                        color: Colors.pink,
-                      ),
-                    if (!widget.isLoading)
-                      ElevatedButton(
-                        onPressed: _trySubmit,
-                        child: Text(
-                          _isLogin ? 'Login' : 'SignUp',
-                          style: const TextStyle(
-                            fontSize: 16,
-                          ),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.fromLTRB(18, 8, 18, 8),
-                          primary: Theme.of(context).primaryColor,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(13.0),
-                          ),
-                        ),
-                      ),
-                    if (!widget.isLoading)
-                      TextButton(
-                        onPressed: () {
-                          setState(() {
-                            _isLogin = !_isLogin;
-                          });
-                        },
-                        child: Text(
-                          _isLogin
-                              ? 'Create new account'
-                              : 'Already have an account?',
-                          style: TextStyle(
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
+                    obscureText: true,
+                    onSaved: (val) {
+                      _userPassword = val.toString();
+                    },
+                  ),
+                  const SizedBox(
+                    height: 12,
+                  ),
+                  if (widget.isLoading)
+                    const CircularProgressIndicator(
+                      color: Colors.pink,
+                    ),
+                  if (!widget.isLoading)
+                    ElevatedButton(
+                      onPressed: _trySubmit,
+                      child: Text(
+                        _isLogin ? 'Login' : 'SignUp',
+                        style: const TextStyle(
+                          fontSize: 16,
                         ),
                       ),
-                  ],
-                ),
-              )),
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.fromLTRB(18, 8, 18, 8),
+                        primary: Theme.of(context).primaryColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(13.0),
+                        ),
+                      ),
+                    ),
+                  if (!widget.isLoading)
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          _isLogin = !_isLogin;
+                        });
+                      },
+                      child: Text(
+                        _isLogin
+                            ? 'Create new account'
+                            : 'Already have an account?',
+                        style: TextStyle(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+          ),
         ),
       ),
     );
